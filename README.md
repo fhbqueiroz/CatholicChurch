@@ -1,6 +1,6 @@
 # CatholicChurch
 
-Simple CRUD using: body-parser, cls-hooked, cors, dotenv, express, express-rate-limit, express-slow-down, faker-br, helmet, mysql2, nodemon, sequelize.
+Simple RESTful nodejs API  using: body-parser, cls-hooked, cors, dotenv, express, express-rate-limit, express-slow-down, faker-br, helmet, mysql2, nodemon, sequelize.
 
 ```
 npm install --save

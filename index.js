@@ -13,12 +13,14 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(cors())
 app.use(morgan('tiny'))
 
-var enumsCommon = require('./commons/enums')
-var saintRoutes = require('./routes/saint.routes')
+var enumsCommon = require('./utils/enums')
+var authRoute = require('./routes/auth.route')
+var saintRoute = require('./routes/saint.route')
 
-app.use("/api", saintRoutes)
+app.use("/api", authRoute)
+app.use("/api", saintRoute)
 app.get('*', function(req, res) {
-    res.send('Invalid url', enumsCommon.STATUS_CODE.NOT_FOUND);
+    res.status(enumsCommon.STATUS_CODE.NOT_FOUND).send('<h1>Invalid url</h1>');
 });
 
 var port = process.env.PORT

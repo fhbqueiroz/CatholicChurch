@@ -1,5 +1,5 @@
 let models = require('../models/index');
-let enumsCommon = require('../commons/enums');
+let enumsCommon = require('../utils/enums');
 
 exports.findAll = async (req, res) => { 
     await models.Saints.findAll()
@@ -33,7 +33,9 @@ exports.insert = async (req, res) => {
         resume: req.body.resume,
         active: req.body.active 
       })
-      .then((saint) => res.status(enumsCommon.STATUS_CODE.OK).send({ message: 'Saint was added with successfully!' }))
+      .then((saint) => res.status(enumsCommon.STATUS_CODE.OK).send({ 
+          message: 'Saint was added with successfully!' 
+      }))
       .catch((error) => res.status(enumsCommon.STATUS_CODE.INTERNAL_SERVER_ERROR).send({ error: error }));
 };
 
@@ -58,7 +60,9 @@ exports.update = async (req, res) => {
             if(!saint)
                 res.status(enumsCommon.STATUS_CODE.NO_CONTENT).send({message: 'Not updated'})
             
-            res.status(enumsCommon.STATUS_CODE.OK).send({message: `Saint with id=${id} was updated successfully`})
+            res.status(enumsCommon.STATUS_CODE.OK).send({ 
+                message: `Saint with id=${id} was updated successfully`
+            })
         })
         .catch((error) => res.status(enumsCommon.STATUS_CODE.INTERNAL_SERVER_ERROR).send({ error: error}));
     })
@@ -71,21 +75,17 @@ exports.delete = async (req, res) => {
     await models.Saints.findByPk(id)
     .then(saint => {
         if (!saint) {
-            res.status(enumsCommon.STATUS_CODE.NOT_FOUND).send({
-                message: 'Saint not found',
-          })
+            res.status(enumsCommon.STATUS_CODE.NOT_FOUND).send({ message: 'Saint not found' })
         }
 
         saint.destroy()
         .then(saint => {
             if (!saint) {
-                res.status(enumsCommon.STATUS_CODE.NO_CONTENT).send({
-                    message: "Saint not deleted!"
-                });
+                res.status(enumsCommon.STATUS_CODE.NO_CONTENT).send({ message: "Saint not deleted!" });
             }
             
-            res.status(enumsCommon.STATUS_CODE.INTERNAL_SERVER_ERROR).send({
-                message: `Saint with id=${id} was deleted successfully`
+            res.status(enumsCommon.STATUS_CODE.INTERNAL_SERVER_ERROR).send({ 
+                message: `Saint with id=${id} was deleted successfully` 
             });
         })
         .catch((error) => res.status(enumsCommon.STATUS_CODE.INTERNAL_SERVER_ERROR).send({ error: error }));

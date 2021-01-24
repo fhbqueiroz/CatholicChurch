@@ -1,17 +1,17 @@
 'use strict';
 
-const faker = require('faker-br');
+var bcrypt = require("bcryptjs");
 
-const saints = [...Array(1)].map((users) => (
+const userDefault = [...Array(1)].map((users) => (
   {
-    name: faker.name.firstName(),
-    date: faker.date.past(),
-    resume: faker.lorem.text().substring(1, 100),
-    active: faker.random.boolean(),
+    username: 'admin',
+    password: bcrypt.hashSync('123456', 8),
+    active: true,
     createdAt: new Date(),
     updatedAt: new Date()
   }
 ))
+
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -24,8 +24,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   
-    await queryInterface.bulkInsert('saints', saints, {});
+
+   await queryInterface.bulkInsert('users', userDefault, {});
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -35,7 +35,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    
-     await queryInterface.bulkDelete('saints', null, {});
+
+    await queryInterface.bulkDelete('users', null, {});
   }
 };
